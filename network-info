@@ -4,24 +4,24 @@
 # https://github.com/vivien/i3blocks-contrib/blob/master/bandwidth/bandwidth
 function format () {
 	# return if negative
-	[ $1 -lt 0 ] && echo -n "0K" && return
+	[ $1 -lt 0 ] && echo -n "0B" && return
 
-	# $1 is bit/s
-	# shift by 10 to get kib/s
-	kib=$(($1 >> 10))
+	# 1000 kib = 1024^1 * 1000 b
+	# 1000 mib = 1024^2 * 1000 b
+	# 1000 gib = 1024^3 * 1000 b
+	# 1000 tib = 1024^4 * 1000 b
 	
 	# truncate to 3 digits
-	# 1 mib = 1024^2 kib = 1048576
-	# 1 gib = 1024^3 kib = 1073741824
-	# 1 tib = 1024^4 kib = 1099511627776
-	if [[ "$kib" -lt 1024 ]]; then
-		echo -n "${kib}K"
-	elif [[ "$kib" -lt 1048576 ]]; then
-		printf '%sM' $(bc <<< "scale=0; $kib / 1024")
-	elif [[ "$kib" -lt 1073741824 ]]; then
-		printf '%sG' $(bc <<< "scale=0; $kib / (1024^2)")
+	if [[ $1 -lt 1000 ]]; then
+		echo -n "${1}B"
+	elif [[ $1 -lt 1024000 ]]; then
+		echo -n "$(($1 >> 10))K"
+	elif [[ $1 -lt 1048576000 ]]; then
+		echo -n "$(($1 >> 20))M"
+	elif [[ $1 -lt 1073741824000 ]]; then
+		echo -n "$(($1 >> 30))G"
 	else
-		printf '%sT' $(bc <<< "scale=0; $kib / (1024^3)")
+		echo -n "$(($1 >> 40))T"
 	fi
 }
 
@@ -56,9 +56,9 @@ data=$XDG_CONFIG_HOME/i3blocks/network
 read -a old < $data
 echo "$time $rx $tx" > $data
 time=$(( $time - ${old[0]} ))
-[ $time -le 0 ] && echo " 0K 祝 0K" && exit 0
+[ $time -le 0 ] && echo " 0B 祝 0B" && exit 0
 
-# bit/s
+# bytes/s
 rx=$(( $rx - ${old[1]} ))
 tx=$(( $tx - ${old[2]} ))
 rx_rate=$(( $rx / $time ))

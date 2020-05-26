@@ -6,7 +6,8 @@ info=($info)
 w=$(awk '{printf "%.0f", $1*10^-6}' /sys/class/power_supply/BAT0/power_now)
 
 if [[ "${info[0]}" == "D" ]]; then
-	echo " ${info[1]}% ${info[2]} $w"W; echo
+	# echo " ${info[1]}% ${info[2]} $w"W; echo
+	echo "-$w""W ${info[2]} ${info[1]}%"; echo
 	# colour orange if using 15W
 	# colour red if using 20W
 	[[ $w -ge 15 ]] && \
@@ -14,10 +15,12 @@ if [[ "${info[0]}" == "D" ]]; then
 		|| echo "#FF9900")
 	[[ ${info[1]} -le 2 ]] && i3-msg -q "exec $HOME/scripts/power-thing hibernate"
 elif [[ "${info[0]}" == "C" ]]; then
-	echo " ${info[1]}% ${info[2]} $w"W; echo
+	# echo " ${info[1]}% ${info[2]} $w"W; echo
+	echo "+$w""W ${info[2]} ${info[1]}%"; echo
 else
 	# full
-	echo " ${info[1]}%"; echo
+	# echo " ${info[1]}%"; echo
+	echo "${info[1]}%"; echo
 	echo "#000000"
 	echo "#FF0000"
 fi

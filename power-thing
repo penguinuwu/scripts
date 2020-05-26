@@ -1,11 +1,11 @@
 #!/bin/bash
 lock() {
-    none=00000000   #00000000
-    wh=FFFFFFFF     #FFFFFFFF
-    verif=9DDAECFF  #9DDAECFF
-    wrong=F29AC0FF  #F29AC0FF
-    key=9CC841FF    #9CC841FF
-    back=EC1C5AFF   #EC1C5AFF
+    none=00000000   #000000
+    wh=FFFFFFFF     #FFFFFF
+    verif=00FFFFFF  #00FFFF
+    wrong=FF0000FF  #FF0000
+    key=00FF00FF    #00FF00
+    back=FF0000FF   #FF0000
 
 	i3lock -ei $HOME/.config/i3/year-of-the-linux-desktop.png \
     --pass-media-keys --pass-screen-keys --pass-power-keys \

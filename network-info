@@ -39,7 +39,7 @@ then
 else
 	echo ":("
 	echo
-	echo "#FFFFFF"
+	echo "#FF0000"
 	exit 0
 fi
 

@@ -1,0 +1,62 @@
+#!/bin/sh
+
+# stolen from
+# https://github.com/vivien/i3blocks-contrib/blob/master/bandwidth/bandwidth
+function format () {
+	[ $1 -lt 0 ] && echo -n "0K" && return
+
+	# shift by 10 bytes to get KiB/s. If the value is larger than
+	# 1024^2 = 1048576, then display MiB/s instead
+	kib=$(( $1 >> 10 ))
+	([ "$1" -gt 1048576 ] && 
+		printf '%sM' $(echo -n "scale=0; $kib / 1024" | bc)) \
+	|| echo -n "${kib}K"
+}
+
+# check and pick interface
+w=wlo1
+e=enp0s20f0u1
+if [ -e /sys/class/net/$e/operstate ] && \
+	[ $(cat /sys/class/net/$e/operstate) = "up" ]
+then
+	interface=$e
+elif [ -e /sys/class/net/$w/operstate ] && \
+	[ $(cat /sys/class/net/$w/operstate) = "up" ]
+then
+	interface=$w
+else
+	echo ":("
+	echo
+	echo "#FFFFFF"
+	exit 0
+fi
+
+# read current data
+read rx < /sys/class/net/$interface/statistics/rx_bytes
+read tx < /sys/class/net/$interface/statistics/tx_bytes
+time=$(date +%s)
+
+# check existance of past data
+data=$XDG_CONFIG_HOME/i3blocks/network
+[ -f $data ] || echo "$time $rx $tx" > $data && chmod u+rw $data
+
+# parse past data
+read -a old < $data
+echo "$time $rx $tx" > $data
+time=$(( $time - ${old[0]} ))
+[ $time -le 0 ] && echo " 0K 祝 0K" && exit 0
+
+# byte/s
+rx=$(( $rx - ${old[1]} ))
+tx=$(( $tx - ${old[2]} ))
+rx_rate=$(( $rx / $time ))
+tx_rate=$(( $tx / $time ))
+
+# print
+echo -n " "
+format $rx_rate
+echo -n " 祝 "
+format $tx_rate
+echo
+
+exit 0

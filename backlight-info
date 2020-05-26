@@ -1,0 +1,10 @@
+#!/bin/sh
+
+case $button in
+	1|2|3) sleep 0.5 && xset dpms force off;;
+	4) lux -a 2% > /dev/null;;
+	5) lux -s 2% > /dev/null;;
+esac
+
+echo "盛 $(lux -G)"
+exit 0

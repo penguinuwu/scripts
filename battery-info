@@ -1,0 +1,22 @@
+#!/bin/bash
+
+info=$(acpi -b | perl -pe 's/^.*?([CDN]).*?(\d+)%,?(.\d+:\d+)?.*?$/$1 $2$3/')
+info=($info)
+w=$(awk '{printf "%.0f", $1*10^-6}' /sys/class/power_supply/BAT0/power_now)
+
+if [[ "${info[0]}" == "D" ]]; then
+	echo " ${info[1]}% ${info[2]} $w"W; echo
+	([[ $w -le 5 ]] && echo "#9CC841") || 
+	([[ $w -ge 15 ]] && ([[ $w -ge 20 ]] && echo "#EC1C5A" || echo "#F58023"))
+	[[ ${info[1]} -le 2 ]] && i3-msg -q "exec $HOME/scripts/power-thing hibernate"
+elif [[ "${info[0]}" == "C" ]]; then
+	echo " ${info[1]}% ${info[2]} $w"W; echo
+	# echo "#46BEA2"
+else
+	# full
+	echo " ${info[1]}%"; echo
+	echo "#000000"
+	echo "#EC1C5A"
+fi
+
+exit 0

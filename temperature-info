@@ -1,0 +1,7 @@
+#!/bin/bash
+
+t=$(acpi -t | perl -pe 's/^.*?(\d+)\..*$/$1/')
+echo "$t°C"
+echo
+[[ $t -ge 50 ]] && ([[ $t -ge 60 ]] && echo "#EC1C5A" || echo "#F58023")
+exit 0

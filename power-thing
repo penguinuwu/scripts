@@ -1,0 +1,62 @@
+#!/bin/bash
+lock() {
+    none=00000000   #00000000
+    wh=FFFFFFFF     #FFFFFFFF
+    verif=9DDAECFF  #9DDAECFF
+    wrong=F29AC0FF  #F29AC0FF
+    key=9CC841FF    #9CC841FF
+    back=EC1C5AFF   #EC1C5AFF
+
+	i3lock -ei $HOME/.config/i3/year-of-the-linux-desktop.png \
+    --pass-media-keys --pass-screen-keys --pass-power-keys \
+    --time-align 2 --date-align 2 --greeter-align 2 \
+    \
+    --veriftext="" --wrongtext="" --noinputtext="" --locktext="" --lockfailedtext="" \
+    \
+    --insidevercolor=$verif --insidewrongcolor=$wrong --insidecolor=$none \
+    --ringvercolor=$wh --ringwrongcolor=$wh --ringcolor=$wh \
+    --linecolor=$none --separatorcolor=$wh \
+    --keyhlcolor=$key --bshlcolor=$back \
+    --radius 30 --ring-width 10 --indpos="10*r:h-4*r" --indicator \
+    \
+    --force-clock --time-font=hack --timesize=30 --date-font=hack --datesize=30 \
+    --datecolor=$wh --datestr="%a, %d %b" --datepos="tx:ty-4*r/3" \
+    --timecolor=$wh --timestr="%I:%M:%S %p" --timepos="ix-2*r:iy+r/4" \
+    \
+    --greetercolor=C1ACD3FF --greetersize=20 --greetertext="uwu" --greeterpos="tx:ty+r"
+}
+
+quiet=$([[ "$1" == "-q" ]] && echo 1 || echo 0)
+[[ $quiet -ne 0 ]] && shift
+
+case "$1" in
+    nvm)
+        ;;
+    off)
+        xset dpms force off 
+        ;;
+	lock)
+		lock && xset dpms force off
+		;;
+	exit)
+		i3-msg exit
+		;;
+	suspend)
+        lock && xset dpms force off && systemctl suspend
+        ;;
+    hibernate)
+        lock && xset dpms force off && systemctl hibernate
+        ;;
+    reboot)
+        systemctl reboot
+        ;;
+    shutdown)
+        systemctl poweroff
+        ;;
+    *)
+        [[ $quiet -ne 0 ]] && exit 0
+        echo "Usage: $HOME/scripts/power-thing {off|lock|logout|suspend|hibernate|reboot|shutdown}"
+        exit 1
+esac
+
+exit 0

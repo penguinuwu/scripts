@@ -1,0 +1,9 @@
+#!/bin/bash
+
+# stolen from u/lightningshivam
+# https://www.reddit.com/r/i3wm/comments/gdynp6/show_indicator_forcontent_of_scratchpad_on_status/fplc3gb
+windows=$(i3-msg -t get_tree | jq -r ".nodes|.[]|.|.nodes|.[]|.nodes|.[]|select(.name==\"__i3_scratch\")|.floating_nodes|.[]|.nodes|.[]|(.window|tostring) + \" \" + .name")
+
+window=$(echo "$windows" | rofi -dmenu -i -p "show" | awk '{print $1;}')
+i3-msg [id=$window] focus && i3-msg floating disable
+pkill -SIGRTMIN+3 i3blocks

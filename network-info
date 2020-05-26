@@ -14,11 +14,11 @@ function format () {
 	# 1 mib = 1024^2 kib = 1048576
 	# 1 gib = 1024^3 kib = 1073741824
 	# 1 tib = 1024^4 kib = 1099511627776
-	if [[ "$kib" -le 1024 ]]; then
+	if [[ "$kib" -lt 1024 ]]; then
 		echo -n "${kib}K"
-	elif [[ "$kib" -le 1048576 ]]; then
+	elif [[ "$kib" -lt 1048576 ]]; then
 		printf '%sM' $(bc <<< "scale=0; $kib / 1024")
-	elif [[ "$kib" -le 1073741824 ]]; then
+	elif [[ "$kib" -lt 1073741824 ]]; then
 		printf '%sG' $(bc <<< "scale=0; $kib / (1024^2)")
 	else
 		printf '%sT' $(bc <<< "scale=0; $kib / (1024^3)")

@@ -1,0 +1,2 @@
+#!/bin/sh
+vblank_mode=0 WINEARCH=win32 WINEPREFIX=$HOME/wine/osu-wine wine /mnt/e/osu/osu\!/osu\!.exe "$@"

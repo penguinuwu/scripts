@@ -1,0 +1,3 @@
+#!/bin/bash
+[[ $# -lt 2 ]] && echo "ssh-utm dh# pc# args?" && exit
+TERM=xterm ssh dh$1pc$2 ${@:3}

@@ -1,5 +1,6 @@
 #!/bin/bash
 
-options="nvm\noff\nlock\nsuspend\nhibernate\nreboot\nshutdown\nexit"
+pgrep i3lock && exit
+options="nvm\non\noff\nlock\nsuspend\nhibernate\nreboot\nshutdown\nexit"
 option=$(echo -e $options | rofi -dmenu -i -p "power")
 $HOME/scripts/power-thing -q $option

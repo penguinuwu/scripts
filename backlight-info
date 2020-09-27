@@ -1,9 +1,9 @@
 #!/bin/sh
 
 case $button in
-	1) $HOME/scripts/redshift-on > /dev/null;;
+	1) $HOME/scripts/redshift-off > /dev/null;;
 	2) sleep 0.5 && xset dpms force off;;
-	3) $HOME/scripts/redshift-off  > /dev/null;;
+	3) $HOME/scripts/redshift-on  > /dev/null;;
 	4) lux -a 2% > /dev/null;;
 	5) lux -s 2% > /dev/null;;
 esac

@@ -32,6 +32,9 @@ quiet=$([[ "$1" == "-q" ]] && echo 1 || echo 0)
 case "$1" in
     nvm)
         ;;
+    on)
+        xset dpms force on
+        ;;
     off)
         xset dpms force off 
         ;;
@@ -55,7 +58,7 @@ case "$1" in
         ;;
     *)
         [[ $quiet -ne 0 ]] && exit 0
-        echo "Usage: $HOME/scripts/power-thing {off|lock|logout|suspend|hibernate|reboot|shutdown}"
+        echo "Usage: $HOME/scripts/power-thing {on|off|lock|logout|suspend|hibernate|reboot|shutdown}"
         exit 1
 esac
 

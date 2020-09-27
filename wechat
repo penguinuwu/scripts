@@ -1,2 +1,0 @@
-#!/bin/sh
-WINEARCH=win32 WINEPREFIX=$HOME/wine/general-wine-32 wine $HOME/wine/general-wine-32/drive_c/Program\ Files/Tencent/WeChat/WeChat.exe

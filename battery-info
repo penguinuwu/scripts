@@ -11,9 +11,9 @@ if [[ "${info[0]}" == "D" ]]; then
 	# colour orange if using 15W
 	# colour red if using 20W
 	if [[ $w -ge 15 ]]; then
-		[[ $w -ge 20 ]] && echo "#FF0000" || echo "#FF9900"
+		[[ $w -ge 20 ]] && echo "#FF0000" || echo "#9900FF"
 	else
-		echo "#FFFFFF"
+		echo "#000000"
 	fi
 	
 	if [[ ${info[1]} -le 3 ]]; then

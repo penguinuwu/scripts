@@ -4,5 +4,5 @@ t=$(acpi -t | perl -pe 's/^.*?(\d+)\..*$/$1/')
 echo "$t°C"
 echo
 [[ $t -ge 50 ]] && ([[ $t -ge 60 ]] && echo "#FF0000" \
-	|| echo "#FF9900")
+	|| echo "#9900FF")
 exit 0

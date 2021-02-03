@@ -1,0 +1,48 @@
+#!/bin/sh
+
+# edit defaults
+export PATH=$PATH:$XDG_BIN_HOME:$HOME/scripts
+export BROWSER=/usr/bin/firefox
+export TERMINAL=/usr/bin/kitty
+
+# xdg
+export XDG_CONFIG_HOME=$HOME/.config
+export XDG_CACHE_HOME=$HOME/.cache
+export XDG_DATA_HOME=$HOME/.local/share
+export XDG_BIN_HOME=$HOME/.local/bin
+export XDG_DATA_DIRS=/usr/local/share:/usr/share
+export XDG_CONFIG_DIRS=/etc/xdg
+
+# cleanup
+export GTK2_RC_FILES=$XDG_CONFIG_HOME/gtk-2.0/gtkrc-2.0
+export NPM_CONFIG_USERCONFIG=$XDG_CONFIG_HOME/npm/npmrc
+export CUDA_CACHE_PATH=$XDG_CACHE_HOME/nv
+export GNUPGHOME=$XDG_DATA_HOME/gnupg
+export CARGO_HOME=$XDG_DATA_HOME/cargo
+export HISTFILE=$XDG_DATA_HOME/bash/history
+export XAUTHORITY=$XDG_CACHE_HOME/Xauthority
+export LESSHISTFILE=-
+export ANDROID_SDK_HOME=$XDG_CONFIG_HOME/android
+export VSCODE_PORTABLE=$XDG_DATA_HOME/code
+export PLTUSERHOME=$XDG_DATA_HOME/racket
+export AUDACITY_PATH=$XDG_CONFIG_HOME/audacity-data
+export _JAVA_OPTIONS=-Djava.util.prefs.userRoot=$XDG_CONFIG_HOME/java
+export GOPATH=$XDG_DATA_HOME/go
+export GNUPGHOME=$XDG_DATA_HOME/gnupg
+export VIMHOME=$XDG_CONFIG_HOME/vim
+export VIMINIT="source $VIMHOME/vimrc"
+
+# wine
+export WINEPREFIX=$HOME/wine/general-wine-64
+export WINEARCH=win64
+
+# ghc
+export GHCUP_USE_XDG_DIRS=poggers
+export GHCUP_INSTALL_BASE_PREFIX=$XDG_DATA_HOME
+export CABAL_DIR=$XDG_DATA_HOME/cabal
+export GHC_ENVIRONMENT=$GHCUP_INSTALL_BASE_PREFIX/ghcup/ghc/x86_64-linux-8.6.5/environments/default
+
+# ssh tunnel
+export SSH_TUNNEL_ADDRESS="52698:localhost:52698"
+
+

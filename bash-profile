@@ -16,6 +16,11 @@ alias feh='feh --image-bg black '
 #alias firefox='firefox --ProfileManager '
 #alias nmcli='nmcli --ask'
 
+# gtk themes
+export GTK_RC_FILES="$XDG_CONFIG_HOME"/gtk-1.0/gtkrc
+export GTK2_RC_FILES="$XDG_CONFIG_HOME"/gtk-2.0/gtkrc
+export GTK_THEME=Materia-dark-compact
+
 # edit defaults
 export PATH=$PATH:$XDG_BIN_HOME:$HOME/scripts
 export BROWSER=/usr/bin/firefox
@@ -37,13 +42,11 @@ export AUDACITY_PATH="$XDG_CONFIG_HOME"/audacity-data
 export CARGO_HOME="$XDG_DATA_HOME"/cargo
 export GNUPGHOME="$XDG_DATA_HOME"/gnupg
 export GOPATH="$XDG_DATA_HOME"/go
-export GTK_RC_FILES="$XDG_CONFIG_HOME"/gtk-1.0/gtkrc
-export GTK2_RC_FILES="$XDG_CONFIG_HOME"/gtk-2.0/gtkrc
 export HISTFILE="$XDG_DATA_HOME"/bash/history
 export LESSHISTFILE=-
 export MYSQL_HISTFILE="$XDG_DATA_HOME"/mysql_history
 export NUGET_PACKAGES="$XDG_CACHE_HOME"/NuGetPackages
-export VSCODE_PORTABLE="$XDG_DATA_HOME"/code
+export VSCODE_PORTABLE="$XDG_CONFIG_HOME"/code
 export XAUTHORITY="$XDG_CACHE_HOME"/Xauthority
 
 export AZURE_CONFIG_DIR=$XDG_DATA_HOME/azure

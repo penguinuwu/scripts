@@ -11,6 +11,7 @@ if [[ $# -ge 2 ]]; then
 	args="${@:3}"
 elif [[ $1 == "-h" ]]; then
 	echo "sshr dh# pc# args?"
+	exit 0
 fi
 
 ssh-utm $dh $pc $args -R $remote

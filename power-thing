@@ -11,19 +11,19 @@ lock() {
     --pass-media-keys --pass-screen-keys --pass-power-keys \
     --time-align 2 --date-align 2 --greeter-align 2 \
     \
-    --veriftext="" --wrongtext="" --noinputtext="" --locktext="" --lockfailedtext="" \
+    --verif-text="" --wrong-text="" --noinput-text="" --lock-text="" --lockfailed-text="" \
     \
-    --insidevercolor=$verif --insidewrongcolor=$wrong --insidecolor=$none \
-    --ringvercolor=$wh --ringwrongcolor=$wh --ringcolor=$wh \
-    --linecolor=$none --separatorcolor=$wh \
-    --keyhlcolor=$key --bshlcolor=$back \
-    --radius 30 --ring-width 10 --indpos="10*r:h-4*r" --indicator \
+    --insidever-color=$verif --insidewrong-color=$wrong --inside-color=$none \
+    --ringver-color=$wh --ringwrong-color=$wh --ring-color=$wh \
+    --line-color=$none --separator-color=$wh \
+    --keyhl-color=$key --bshl-color=$back \
+    --indicator --radius 30 --ring-width 10 --ind-pos="10*r:h-4*r" \
     \
-    --force-clock --time-font=hack --timesize=30 --date-font=hack --datesize=30 \
-    --datecolor=$wh --datestr="%a, %d %b" --datepos="tx:ty-4*r/3" \
-    --timecolor=$wh --timestr="%I:%M:%S %p" --timepos="ix-2*r:iy+r/4" \
+    --force-clock --time-font=hack --time-size=30 --date-font=hack --date-size=30 \
+    --date-color=$wh --date-str="%a, %d %b" --date-pos="tx:ty-4*r/3" \
+    --time-color=$wh --time-str="%I:%M:%S %p" --time-pos="ix-2*r:iy+r/4" \
     \
-    --greetercolor=C1ACD3FF --greetersize=20 --greetertext="uwu" --greeterpos="tx:ty+r"
+    --greeter-color=C1ACD3FF --greeter-size=20 --greeter-text="uwu" --greeter-pos="tx:ty+r"
 }
 
 quiet=$([[ "$1" == "-q" ]] && echo 1 || echo 0)

@@ -20,13 +20,14 @@ ps_format_reset="\e[0m"
 ps_format_time="\e[0;30;46m"
 ps_format_pwd="\e[1;30;42m"
 ps_format_git="\e[0;30;43m"
-ps_command_git_branch="git branch 2> /dev/null | sed -En 's/^\* (.*)$/ (\1) /p'"
+ps_command_git_branch="git branch 2> /dev/null | sed -rn 's/^\* (.*)$/ (\1) /p'"
 ps_format_prompt="\e[0;35m"
 
 trap 'echo -en "$ps_format_reset"' DEBUG
 PS1=""
 PS1+="\[${ps_format_time}\] \D{%I:%M%P} "
 PS1+="\[${ps_format_pwd}\] \w "
-PS1+="\[${ps_format_git}\]\$(${ps_command_git_branch})"
+# escaped backquotes are used so the git command re-executes every prompt
+PS1+="\[${ps_format_git}\]\`${ps_command_git_branch}\`"
 PS1+="\[${ps_format_reset}\] \[${ps_format_reset}\]\n"
 PS1+="\[${ps_format_prompt}\]\$\[${ps_format_reset}\] "

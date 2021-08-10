@@ -1,0 +1,32 @@
+#!/bin/bash
+# RGB ANSI esc seq https://stackoverflow.com/a/26665998
+# DEBUG trap https://unix.stackexchange.com/a/412934
+# example https://github.com/pkazmier/bash-prompt
+
+# # v1
+# PS1=$(echo -e "\e[1;38;2;131;255;226m\u\e[m: \e[1;38;2;255;131;160m\w\e[m \$ \e[38;2;131;255;164m")
+# PS1=$(echo -e "\e[1;38;5;159m\u\e[m: \e[1;38;5;218m\w\e[m \$ \e[38;5;157m")
+# PS1=$(echo -e '\[\e[1;38;5;117m\]\u\[\e[m@\] \[\e[1;38;5;211m\]\W\[\e[m\] \$ ')
+
+# v2
+# ps_normal="\e[0m"
+# ps_blue="\e[1;38;5;117m"
+# ps_pink="\e[1;38;5;211m"
+# ps_green="\e[0;38;5;121m"
+# PS1="\[$ps_blue\]\u\[$ps_normal\]@ \[$ps_pink\]\w\[$ps_normal\] \$ \[$ps_green\]"
+
+# v3
+ps_format_reset="\e[0m"
+ps_format_time="\e[0;30;46m"
+ps_format_pwd="\e[1;30;42m"
+ps_format_git="\e[0;30;43m"
+ps_command_git_branch="git branch 2> /dev/null | sed -En 's/^\* (.*)$/ (\1) /p'"
+ps_format_prompt="\e[0;35m"
+
+trap 'echo -en "$ps_format_reset"' DEBUG
+PS1=""
+PS1+="\[${ps_format_time}\] \D{%I:%M%P} "
+PS1+="\[${ps_format_pwd}\] \w "
+PS1+="\[${ps_format_git}\]\$(${ps_command_git_branch})"
+PS1+="\[${ps_format_reset}\] \[${ps_format_reset}\]\n"
+PS1+="\[${ps_format_prompt}\]\$\[${ps_format_reset}\] "

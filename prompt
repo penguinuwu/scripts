@@ -1,33 +1,52 @@
 #!/bin/bash
-# RGB ANSI esc seq https://stackoverflow.com/a/26665998
-# DEBUG trap https://unix.stackexchange.com/a/412934
-# example https://github.com/pkazmier/bash-prompt
+#region stolen code sources
+# RGB ANSI esc seq - https://stackoverflow.com/a/26665998
+# colour list - https://misc.flogisoft.com/bash/tip_colors_and_formatting
+# DEBUG trap - https://unix.stackexchange.com/a/412934
+# example - https://github.com/pkazmier/bash-prompt
+#endregion
 
-# # v1
+#region v1
 # PS1=$(echo -e "\e[1;38;2;131;255;226m\u\e[m: \e[1;38;2;255;131;160m\w\e[m \$ \e[38;2;131;255;164m")
 # PS1=$(echo -e "\e[1;38;5;159m\u\e[m: \e[1;38;5;218m\w\e[m \$ \e[38;5;157m")
 # PS1=$(echo -e '\[\e[1;38;5;117m\]\u\[\e[m@\] \[\e[1;38;5;211m\]\W\[\e[m\] \$ ')
+#endregion
 
-# v2
+#region v2
 # ps_normal="\e[0m"
 # ps_blue="\e[1;38;5;117m"
 # ps_pink="\e[1;38;5;211m"
 # ps_green="\e[0;38;5;121m"
 # PS1="\[$ps_blue\]\u\[$ps_normal\]@ \[$ps_pink\]\w\[$ps_normal\] \$ \[$ps_green\]"
+#endregion
 
-# v3
-ps_format_reset="\e[0m"
-ps_format_time="\e[0;30;46m"
-ps_format_pwd="\e[1;30;42m"
-ps_format_git="\e[0;30;43m"
-ps_command_git_branch="git branch 2> /dev/null | sed -rn 's/^\* (.*)$/ (\1) /p'"
-ps_format_prompt="\e[0;35m"
+#region v3
+__ps_format_reset='\e[0m'
+__ps_bg_green='\e[1;30;42m'
+__ps_bg_yellow='\e[0;30;43m'
+__ps_bg_blue='\e[0;30;44m'
+__ps_bg_magenta='\e[0;30;45m'
+__ps_bg_cyan='\e[0;30;46m'
+__ps_fg_yellow='\e[0;33m'
+__ps_fg_magenta='\e[0;35m'
+__ps_fg_cyan='\e[0;36m'
+__ps_command_git_branch='git branch 2> /dev/null | sed -rn "s/^\* (.*)$/ (\1) /p"'
 
-trap 'echo -en "$ps_format_reset"' DEBUG
-PS1=""
-PS1+="\[${ps_format_time}\] \D{%I:%M%P} "
-PS1+="\[${ps_format_pwd}\] \w "
+__ps1_time="\[${__ps_bg_cyan}\] \D{%I:%M%P} "
+__ps1_directory="\[${__ps_bg_green}\] \w "
 # escaped backquotes are used so the git command re-executes every prompt
-PS1+="\[${ps_format_git}\]\`${ps_command_git_branch}\`"
-PS1+="\[${ps_format_reset}\] \[${ps_format_reset}\]\n"
-PS1+="\[${ps_format_prompt}\]\$\[${ps_format_reset}\] "
+__ps1_git="\[${__ps_bg_yellow}\]\`${__ps_command_git_branch}\`"
+__ps1_newline="\[${__ps_format_reset}\]\n"
+__ps1_session_info="[\[${__ps_fg_cyan}\]\u\[${__ps_format_reset}\]@\[${__ps_fg_magenta}\]\H\[${__ps_format_reset}\]]"
+__ps1_prompt="\[${__ps_fg_yellow}\]\$\[${__ps_format_reset}\] "
+
+# ps1
+PS1=""
+PS1+="${__ps1_time}${__ps1_directory}${__ps1_git}${__ps1_newline}"
+PS1+="${__ps1_session_info}${__ps1_prompt}"
+
+# ps2
+PS2="\[${__ps_fg_yellow}\]>\[${__ps_format_reset}\] "
+
+trap 'echo -en "$__ps_format_reset"' DEBUG
+#endregion

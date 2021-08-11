@@ -1,17 +1,2 @@
 #!/bin/bash
-
-dh=2010
-pc=07
-remote=$SSH_TUNNEL_ADDRESS
-args=
-
-if [[ $# -ge 2 ]]; then
-	dh=$1
-	pc=$2
-	args="${@:3}"
-elif [[ $1 == "-h" ]]; then
-	echo "sshr dh# pc# args?"
-	exit 0
-fi
-
-ssh-utm $dh $pc $args -R $remote
+ssh-utm ${@} "-R $SSH_TUNNEL_ADDRESS"

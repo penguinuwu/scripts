@@ -1,0 +1,16 @@
+#!/bin/bash
+# https://misc.flogisoft.com/bash/tip_colors_and_formatting
+
+for i in 039 030 031 032 033 034 035 036 037 090 091 092 093 094 095 096 097
+do
+	echo -ne "\e[0;${i}m ${i} "
+done
+
+echo
+
+for i in 049 040 041 042 043 044 045 046 047 100 101 102 103 104 105 106 107
+do
+	echo -ne "\e[0;${i}m ${i} "
+done
+
+echo

@@ -1,3 +1,21 @@
 #!/bin/bash
-f="$(cd "$(dirname "$1")" && pwd)"
-pdflatex -halt-on-error --output-directory="$f" "$1" && rm -f "$f"/*.aux "$f"/*.log "$f"/*.out
+if [[ ! "$1" =~ .*\.tex ]]; then
+	echo "error: file '${1}' does not end in '.tex'"
+	echo "usage: ${0} \"<tex_file_path>.tex\""
+	exit
+fi
+
+bas=`basename --suffix='.tex' "${1}"`
+dir=`dirname "$1"`
+
+make-pdf () {
+	pdflatex -halt-on-error --output-directory="${dir}" "${bas}.tex"
+	return "$?"
+}
+
+clean-aux () {
+	rm -f "${dir}/${bas}.aux" "${dir}/${bas}.log" "${dir}/${bas}.out"
+	return "$?"
+}
+
+make-pdf && clean-aux

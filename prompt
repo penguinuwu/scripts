@@ -6,6 +6,11 @@
 # example - https://github.com/pkazmier/bash-prompt
 #endregion
 
+#region if not running interactively, dont do anything
+# important because any output breaks scp - https://askubuntu.com/a/976226
+[ -z "$PS1" ] && return
+#endregion
+
 #region v1
 # PS1=$(echo -e "\e[1;38;2;131;255;226m\u\e[m: \e[1;38;2;255;131;160m\w\e[m \$ \e[38;2;131;255;164m")
 # PS1=$(echo -e "\e[1;38;5;159m\u\e[m: \e[1;38;5;218m\w\e[m \$ \e[38;5;157m")
@@ -48,5 +53,7 @@ PS1+="${__ps1_session_info}${__ps1_prompt}"
 # ps2
 PS2="\[${__ps_fg_yellow}\]>\[${__ps_format_reset}\] "
 
-trap 'echo -en "$__ps_format_reset"' DEBUG
+# trap is not needed because the text is not coloured
+# also if we dont check for interactive, the echo will break scp
+# trap 'echo -en "$__ps_format_reset"' DEBUG
 #endregion

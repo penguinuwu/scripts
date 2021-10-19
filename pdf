@@ -1,21 +1,42 @@
 #!/bin/bash
 if [[ ! "$1" =~ .*\.tex ]]; then
 	echo "error: file '${1}' does not end in '.tex'"
-	echo "usage: ${0} \"<tex_file_path>.tex\""
-	exit
+	echo "usage: ${0} \"<tex_file_path>.tex\" \"<optional_output_name>\""
+	exit 0
 fi
 
-bas=`basename --suffix='.tex' "${1}"`
-dir=`dirname "$1"`
+# global variables
+dir=$(dirname "$1")
+base=$(basename --suffix='.tex' "$1")
+output="$2"
 
+# compile and return error code
 make-pdf () {
-	pdflatex -halt-on-error --output-directory="${dir}" "${bas}.tex"
+	pdflatex -halt-on-error --output-directory="${dir}" -- "${dir}/${base}.tex"
 	return "$?"
 }
 
+# remove aux files and return error code
 clean-aux () {
-	rm -f "${dir}/${bas}.aux" "${dir}/${bas}.log" "${dir}/${bas}.out"
+	rm -vf -- "${dir}/${base}.aux" "${dir}/${base}.log" "${dir}/${base}.out"
 	return "$?"
 }
 
-make-pdf && clean-aux
+rename-pdf () {
+	local randname
+
+	[ -z "$output" ] && return 0
+	
+	# error occurs when rename happens, so random temp name is used
+	randname="${dir}/${RANDOM}-${RANDOM}-${base}.pdf"
+	mv -vf -- "${dir}/${base}.pdf" "${randname}"
+	mv -vf -- "${randname}" "${dir}/${output}"
+
+	# move file back on error
+	if [ "$?" != '0' ]; then
+		mv -vf -- "${randname}" "${dir}/${base}.pdf"
+		return 0
+	fi
+}
+
+make-pdf && clean-aux && rename-pdf

@@ -15,11 +15,13 @@ alias less='less -r '
 alias feh='feh --image-bg black '
 #alias firefox='firefox --ProfileManager '
 #alias nmcli='nmcli --ask'
+alias btw='neofetch '
+alias hackerman='cmatrix -b '
 
 # gtk themes
 export GTK_RC_FILES="$XDG_CONFIG_HOME"/gtk-1.0/gtkrc
 export GTK2_RC_FILES="$XDG_CONFIG_HOME"/gtk-2.0/gtkrc
-export GTK_THEME=Materia-dark-compact
+export GTK_THEME=Orchis-pink-dark-compact
 
 # edit defaults
 export PATH=$PATH:$XDG_BIN_HOME:$HOME/scripts

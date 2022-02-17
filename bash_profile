@@ -1,9 +1,11 @@
 #!/bin/sh
 
 # xdg setup
+# https://wiki.archlinux.org/title/XDG_Base_Directory#User_directories
 export XDG_CONFIG_HOME="$HOME"/.config
 export XDG_CACHE_HOME="$HOME"/.cache
 export XDG_DATA_HOME="$HOME"/.local/share
+export XDG_STATE_HOME="$HOME"/.local/state
 export XDG_BIN_HOME="$HOME"/.local/bin
 export XDG_DATA_DIRS=/usr/local/share:/usr/share
 export XDG_CONFIG_DIRS=/etc/xdg
@@ -12,11 +14,18 @@ export XDG_CONFIG_DIRS=/etc/xdg
 alias ls='ls --color=always '
 alias pacman='pacman --color=always '
 alias less='less -r '
-alias feh='feh --image-bg black '
 #alias firefox='firefox --ProfileManager '
 #alias nmcli='nmcli --ask'
 alias btw='neofetch '
 alias hackerman='cmatrix -b '
+alias mirror='sudo reflector --country CA,US --protocol https --save /etc/pacman.d/mirrorlist '
+alias vim='nvim '
+#alias code='code --enable-features=UseOzonePlatform --ozone-platform=wayland '
+#alias vscodium='vscodium --enable-features=UseOzonePlatform --ozone-platform=wayland '
+
+# sway variables
+export QT_QPA_PLATFORM='wayland'
+export MOZ_ENABLE_WAYLAND=1
 
 # gtk themes
 export GTK_RC_FILES="$XDG_CONFIG_HOME"/gtk-1.0/gtkrc
@@ -29,14 +38,11 @@ export BROWSER=firefox-pm
 export TERMINAL=/usr/bin/kitty
 
 # wine
-export WINEPREFIX="$HOME"/wine/general-wine-64
-export WINEARCH=win64
+#export WINEPREFIX="$HOME"/wine/general-wine-64
+#export WINEARCH=win64
 
 # ssh tunnel
 export SSH_TUNNEL_ADDRESS="52698:localhost:52698"
-
-# neo4j database
-export NEO4J_HOME=/home/uwu/fuck
 
 # cleanup
 export ANDROID_SDK_HOME="$XDG_CONFIG_HOME"/android
@@ -75,22 +81,25 @@ alias yarn="yarn --use-yarnrc $XDG_CONFIG_HOME/yarn/config"
 export NPM_CONFIG_USERCONFIG="$XDG_CONFIG_HOME"/npm/npmrc
 export NODE_REPL_HISTORY="$XDG_DATA_HOME"/node_repl_history
 
-export PSQLRC="$XDG_CONFIG_HOME"/pg/psqlrc
-export PSQL_HISTORY="$XDG_CACHE_HOME"/pg/psql_history
-export PGPASSFILE="$XDG_CONFIG_HOME"/pg/pgpass
-export PGSERVICEFILE="$XDG_CONFIG_HOME"/pg/pg_service.conf
+#export PSQLRC="$XDG_CONFIG_HOME"/pg/psqlrc
+#export PSQL_HISTORY="$XDG_CACHE_HOME"/pg/psql_history
+#export PGPASSFILE="$XDG_CONFIG_HOME"/pg/pgpass
+#export PGSERVICEFILE="$XDG_CONFIG_HOME"/pg/pg_service.conf
 
 export VIMHOME="$XDG_CONFIG_HOME/vim"
 export VIMINIT="source $VIMHOME/vimrc"
 
-alias newsboat='newsboat '\
-	"--url-file=$XDG_CONFIG_HOME/newsboat.urls "\
-	"--cache-file=$XDG_CACHE_HOME/newsboat.cache.db "\
-	"--config-file=$XDG_CONFIG_HOME/newsboat.config"
+#alias newsboat='newsboat '\
+#	"--url-file=$XDG_CONFIG_HOME/newsboat.urls "\
+#	"--cache-file=$XDG_CACHE_HOME/newsboat.cache.db "\
+#	"--config-file=$XDG_CONFIG_HOME/newsboat.config"
 
 # racket and ghc
-export PLTUSERHOME="$XDG_DATA_HOME"/racket
-export GHCUP_USE_XDG_DIRS=pog
-export GHCUP_INSTALL_BASE_PREFIX="$XDG_DATA_HOME"
-export CABAL_DIR="$XDG_DATA_HOME"/cabal
-export GHC_ENVIRONMENT="$GHCUP_INSTALL_BASE_PREFIX"/ghcup/ghc/x86_64-linux-8.6.5/environments/default
+#export PLTUSERHOME="$XDG_DATA_HOME"/racket
+#export GHCUP_USE_XDG_DIRS=pog
+#export GHCUP_INSTALL_BASE_PREFIX="$XDG_DATA_HOME"
+#export CABAL_DIR="$XDG_DATA_HOME"/cabal
+#export GHC_ENVIRONMENT="$GHCUP_INSTALL_BASE_PREFIX"/ghcup/ghc/x86_64-linux-8.6.5/environments/default
+
+# R stats
+export R_ENVIRON=${XDG_CONFIG_HOME}/Renviron

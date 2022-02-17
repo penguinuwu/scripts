@@ -1,16 +1,15 @@
 #!/bin/bash
 
 case $button in
-	1|2|3|4|5) i3-msg -q "exec scratchpad-menu";;
+	1|2|3|4|5) swaymsg -q "exec scratchpad-menu";;
 esac
 
-# wtf https://stackoverflow.com/questions/218156/bash-regex-with-quotes
-# jk no need anymore, bad design
-#[[ $# -ne 1 ]] || [[ ! $1 =~ ^-[cr]$ ]] && echo "usage: scratchpad-show [-c|-r]" && exit 0
-
-# stolen from u/lightningshivam
+# inspired by u/lightningshivam
 # https://www.reddit.com/r/i3wm/comments/gdynp6/show_indicator_forcontent_of_scratchpad_on_status/fplc3gb
-windows=$(i3-msg -t get_tree | jq -r ".nodes|.[]|.|.nodes|.[]|.nodes|.[]|select(.name==\"__i3_scratch\")|.floating_nodes|.[]|.nodes|.[]|(.window|tostring) + \" \" + .name")
+#windows=$(swaymsg -t get_tree | jq -r '.nodes | .[] | .nodes | .[] | select(.name=="__i3_scratch") | .floating_nodes | .[] | (.id | tostring) + "\t" + (.name | tostring)')
+
+# efficiency improvement
+windows=$(swaymsg -t get_tree | jq -r '.nodes | .[] | select(.name=="__i3") | .nodes | .[] | select(.name=="__i3_scratch") | .floating_nodes | .[] | .id')
 
 echo -n " "
 [[ -z "$windows" ]] && echo "0" && exit 0

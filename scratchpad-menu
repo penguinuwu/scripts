@@ -1,9 +1,13 @@
 #!/bin/bash
 
-# stolen from u/lightningshivam
+# inspired by u/lightningshivam
 # https://www.reddit.com/r/i3wm/comments/gdynp6/show_indicator_forcontent_of_scratchpad_on_status/fplc3gb
-windows=$(i3-msg -t get_tree | jq -r ".nodes|.[]|.|.nodes|.[]|.nodes|.[]|select(.name==\"__i3_scratch\")|.floating_nodes|.[]|.nodes|.[]|(.window|tostring) + \" \" + .name")
+#windows=$(swaymsg -t get_tree | jq -r ".nodes|.[]|.|.nodes|.[]|.nodes|.[]|select(.name==\"__i3_scratch\")|.floating_nodes|.[]|.nodes|.[]|(.window|tostring) + \" \" + .name")
+
+#windows=$(swaymsg -t get_tree | jq -r '.nodes | .[] | .nodes | .[] | select(.name=="__i3_scratch") | .floating_nodes | .[] | (.id | tostring) + "\t" + (.name | tostring)')
+# efficiency improvement
+windows=$(swaymsg -t get_tree | jq -r '.nodes | .[] | select(.name=="__i3") | .nodes | .[] | select(.name=="__i3_scratch") | .floating_nodes | .[] | (.id | tostring) + "\t" + (.name | tostring)')
 
 window=$(echo "$windows" | rofi -dmenu -i -p "show" | awk '{print $1;}')
-i3-msg [id=$window] focus && i3-msg floating disable
+swaymsg "[con_id=$window] focus; floating disable"
 pkill -SIGRTMIN+3 i3blocks

@@ -1,29 +1,15 @@
 #!/bin/bash
 lock() {
-    none=00000000   #000000
-    wh=FFFFFFFF     #FFFFFF
-    verif=00FFFFFF  #00FFFF
-    wrong=FF0000FF  #FF0000
-    key=00FF00FF    #00FF00
-    back=FF0000FF   #FF0000
+    # https://www.reddit.com/r/unixporn/comments/pbm6qy/sway_first_time_ricing_on_linux_how_did_i_do/
+    # https://github.com/shaunsingh/nix-darwin-dotfiles/tree/e900a178f3f379cd8b6f88abbe0bf75531909fd2/.config/scripts
+    pgrep swaylock || swaylock
+}
 
-	i3lock -ei $HOME/.config/i3/year-of-the-linux-desktop.png \
-    --pass-media-keys --pass-screen-keys --pass-power-keys \
-    --time-align 2 --date-align 2 --greeter-align 2 \
-    \
-    --verif-text="" --wrong-text="" --noinput-text="" --lock-text="" --lockfailed-text="" \
-    \
-    --insidever-color=$verif --insidewrong-color=$wrong --inside-color=$none \
-    --ringver-color=$wh --ringwrong-color=$wh --ring-color=$wh \
-    --line-color=$none --separator-color=$wh \
-    --keyhl-color=$key --bshl-color=$back \
-    --indicator --radius 30 --ring-width 10 --ind-pos="10*r:h-4*r" \
-    \
-    --force-clock --time-font=hack --time-size=30 --date-font=hack --date-size=30 \
-    --date-color=$wh --date-str="%a, %d %b" --date-pos="tx:ty-4*r/3" \
-    --time-color=$wh --time-str="%I:%M:%S %p" --time-pos="ix-2*r:iy+r/4" \
-    \
-    --greeter-color=C1ACD3FF --greeter-size=20 --greeter-text="uwu" --greeter-pos="tx:ty+r"
+off() {
+    # TODO: maybe start swayidle and record pid then sigusr1 it ?
+    # or wait for wayland updates lollllllll
+    #sleep 0.5 && pkill -SIGUSR1 swayidle
+    true
 }
 
 quiet=$([[ "$1" == "-q" ]] && echo 1 || echo 0)
@@ -33,22 +19,22 @@ case "$1" in
     nvm)
         ;;
     on)
-        xset dpms force on
+        swaymsg 'output * dpms on'
         ;;
     off)
-        xset dpms force off 
+        off
         ;;
 	lock)
-		lock && xset dpms force off
+		lock
 		;;
 	exit)
-		i3-msg exit
+		swaymsg exit
 		;;
 	suspend)
-        lock && systemctl suspend
+        lock; sleep 0.5 && off && systemctl suspend
         ;;
     hibernate)
-        lock && xset dpms force off && systemctl hibernate
+        lock; sleep 0.5 && off && systemctl hibernate
         ;;
     reboot)
         systemctl reboot

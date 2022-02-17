@@ -2,11 +2,11 @@
 
 case $button in
 	1) $HOME/scripts/redshift-off > /dev/null;;
-	2) sleep 0.5 && xset dpms force off;;
+	2) $HOME/scripts/power-thing off;;
 	3) $HOME/scripts/redshift-on  > /dev/null;;
-	4) lux -a 2% > /dev/null;;
-	5) lux -s 2% > /dev/null;;
+	4) light -A 2 > /dev/null;;
+	5) light -U 2 > /dev/null;;
 esac
 
-echo "盛 $(lux -G)"
+printf '盛 %.f\n' "$(light -G)"
 exit 0

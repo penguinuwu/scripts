@@ -1,6 +1,6 @@
 #!/bin/bash
 
-t=$(acpi -t | perl -pe 's/^.*?(\d+)\..*$/$1/')
+t=$(acpi -t | perl -pe 's/^.*?(\d+\.\d*).*$/$1/')
 echo "$t°C"
 echo
 [[ $t -ge 50 ]] && ([[ $t -ge 60 ]] && echo "#FF0000" \

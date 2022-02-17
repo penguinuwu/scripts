@@ -1,6 +1,6 @@
 #!/bin/bash
 
-pgrep i3lock && exit
+pgrep swaylock && exit
 options="nvm\non\noff\nlock\nsuspend\nhibernate\nreboot\nshutdown\nexit"
 option=$(echo -e $options | rofi -dmenu -i -p "power")
 $HOME/scripts/power-thing -q $option

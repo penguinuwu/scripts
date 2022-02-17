@@ -2,36 +2,36 @@
 
 info=$(acpi -b | perl -pe 's/^.*?([CDN]).*?(\d+)%,?(.\d+:\d+)?.*?$/$1 $2$3/')
 info=($info)
-w=$(awk '{printf "%.0f", $1*10^-6}' /sys/class/power_supply/BAT0/power_now)
+
+i=$(cat /sys/class/power_supply/BAT1/current_now)
+v=$(cat /sys/class/power_supply/BAT1/voltage_now)
+w=$(awk "BEGIN { printf \"%.0f\", $i * $v / 10^12 }")
 
 if [[ "${info[0]}" == "D" ]]; then
 	# echo " ${info[1]}% ${info[2]} $w"W; echo
 	echo "-$w""W ${info[2]} ${info[1]}%"; echo
 	
-	# colour orange if using 15W
-	# colour red if using 20W
+	# text orange if using 15W
+	# text red if using 20W
 	if [[ $w -ge 15 ]]; then
 		[[ $w -ge 20 ]] && echo "#FF0000" || echo "#9900FF"
 	else
-		echo "#000000"
+		echo "#DDC5E7"
 	fi
-	
+
+	# background red if less or equal to 3%
 	if [[ ${info[1]} -le 3 ]]; then
-		if [[ ${info[1]} -le 2 ]]; then
-			i3-msg -q "exec $HOME/scripts/power-thing hibernate"
-		else
-			echo "#FF0000"
-			i3-msg -q "exec $HOME/scripts/power-thing off"
-		fi
+		echo "#FF0000"
+		# hibernate if less or equal to 2%
+		#[[ ${info[1]} -le 2 ]] && power-thing hibernate
 	fi
 
 elif [[ "${info[0]}" == "C" ]]; then
-	# echo " ${info[1]}% ${info[2]} $w"W; echo
 	echo "+$w""W ${info[2]} ${info[1]}%"; echo
+	echo "#DDC5E7"
 
 else
 	# full
-	# echo " ${info[1]}%"; echo
 	echo "${info[1]}%"; echo
 	echo "#000000"
 	echo "#FF0000"

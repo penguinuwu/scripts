@@ -12,7 +12,12 @@ output="$2"
 
 # compile and return error code
 make-pdf () {
-	pdflatex -halt-on-error --output-directory="${dir}" -- "${dir}/${base}.tex"
+	# prefer xelatex if installed, otherwise use pdflatex
+	if command -v -- xelatex &> /dev/null; then
+		xelatex -halt-on-error --output-directory="${dir}" -- "${dir}/${base}.tex"
+	else
+		pdflatex -halt-on-error --output-directory="${dir}" -- "${dir}/${base}.tex"
+	fi
 	return "$?"
 }
 

@@ -1,0 +1,17 @@
+#!/bin/sh
+
+#export QT_QPA_PLATFORM=wayland
+export QT_QPA_PLATFORM="wayland;xcb"
+export QT_QPA_PLATFORMTHEME=qt5ct
+export QT_WAYLAND_DISABLE_WINDOWDECORATION=1
+export GDK_BACKEND=wayland
+export XDG_CURRENT_DESKTOP=sway
+export MOZ_ENABLE_WAYLAND=1
+
+# activate pamixer (maybe?)
+# https://unix.stackexchange.com/a/563563
+/usr/bin/pamixer --get-volume 1> /dev/null 2>& 1
+/usr/bin/sway
+
+echo 'killall sway-audio-idle-inhibit ...'
+killall sway-audio-idle-inhibit

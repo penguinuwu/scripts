@@ -10,7 +10,7 @@ w=$(awk "BEGIN { printf \"%.0f\", $i * $v / 10^12 }")
 if [[ "${info[0]}" == "D" ]]; then
 	# echo " ${info[1]}% ${info[2]} $w"W; echo
 	echo "-$w""W ${info[2]} ${info[1]}%"; echo
-	
+
 	# text orange if using 15W
 	# text red if using 20W
 	if [[ $w -ge 15 ]]; then
@@ -23,6 +23,7 @@ if [[ "${info[0]}" == "D" ]]; then
 	if [[ ${info[1]} -le 3 ]]; then
 		echo "#FF0000"
 		# hibernate if less or equal to 2%
+		# handled by UPower at /etc/UPower/UPower.conf
 		#[[ ${info[1]} -le 2 ]] && power-thing hibernate
 	fi
 

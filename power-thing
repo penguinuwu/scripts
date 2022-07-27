@@ -1,29 +1,29 @@
 #!/bin/bash
 lock() {
-    # https://www.reddit.com/r/unixporn/comments/pbm6qy/sway_first_time_ricing_on_linux_how_did_i_do/
-    # https://github.com/shaunsingh/nix-darwin-dotfiles/tree/e900a178f3f379cd8b6f88abbe0bf75531909fd2/.config/scripts
-    pgrep swaylock || swaylock
+	# https://www.reddit.com/r/unixporn/comments/pbm6qy/sway_first_time_ricing_on_linux_how_did_i_do/
+	# https://github.com/shaunsingh/nix-darwin-dotfiles/tree/e900a178f3f379cd8b6f88abbe0bf75531909fd2/.config/scripts
+	pgrep swaylock || swaylock
 }
 
 off() {
-    # TODO: maybe start swayidle and record pid then sigusr1 it ?
-    # or wait for wayland updates lollllllll
-    #sleep 0.5 && pkill -SIGUSR1 swayidle
-    true
+	# TODO: maybe start swayidle and record pid then sigusr1 it ?
+	# or wait for wayland updates lollllllll
+	#sleep 0.5 && pkill -SIGUSR1 swayidle
+	true
 }
 
 quiet=$([[ "$1" == "-q" ]] && echo 1 || echo 0)
 [[ $quiet -ne 0 ]] && shift
 
 case "$1" in
-    nvm)
-        ;;
-    on)
-        swaymsg 'output * dpms on'
-        ;;
-    off)
-        off
-        ;;
+	nvm)
+		;;
+	on)
+		swaymsg 'output * dpms on'
+		;;
+	off)
+		off
+		;;
 	lock)
 		lock
 		;;
@@ -31,21 +31,23 @@ case "$1" in
 		swaymsg exit
 		;;
 	suspend)
-        lock; sleep 0.5 && off && systemctl suspend
-        ;;
-    hibernate)
-        lock; sleep 0.5 && off && systemctl hibernate
-        ;;
-    reboot)
-        systemctl reboot
-        ;;
-    shutdown)
-        systemctl poweroff
-        ;;
-    *)
-        [[ $quiet -ne 0 ]] && exit 0
-        echo "Usage: $HOME/scripts/power-thing {on|off|lock|logout|suspend|hibernate|reboot|shutdown}"
-        exit 1
+		lock; sleep 0.5 && off && systemctl suspend
+		;;
+	hybrid-sleep)
+		lock; sleep 0.5 && off && systemctl hybrid-sleep
+		;;
+	hibernate)
+		lock; sleep 0.5 && off && systemctl hibernate
+		;;
+	reboot)
+		systemctl reboot
+		;;
+	shutdown)
+		systemctl poweroff
+		;;
+	*)
+		[[ $quiet -ne 0 ]] && exit 0
+		echo "Usage: $HOME/scripts/power-thing {on|off|lock|logout|suspend|hibrid-sleep|hibernate|reboot|shutdown}"
 esac
 
 exit 0

@@ -20,21 +20,19 @@ alias btw='neofetch '
 alias hackerman='cmatrix -ab '
 alias mirror='sudo reflector --country CA,US --protocol https --save /etc/pacman.d/mirrorlist '
 alias vim='nvim '
+alias lxappearance='GDK_BACKEND=x11 lxappearance '
 #alias code='code --enable-features=UseOzonePlatform --ozone-platform=wayland '
 #alias vscodium='vscodium --enable-features=UseOzonePlatform --ozone-platform=wayland '
-
-# sway variables
-export QT_QPA_PLATFORM='wayland'
-export MOZ_ENABLE_WAYLAND=1
+alias sway='startw '
 
 # gtk themes
 export GTK_RC_FILES="$XDG_CONFIG_HOME"/gtk-1.0/gtkrc
 export GTK2_RC_FILES="$XDG_CONFIG_HOME"/gtk-2.0/gtkrc
-export GTK_THEME=Orchis-pink-dark-compact
+export GTK_THEME='Graphite-pink-dark'
 
 # edit defaults
 export PATH=$PATH:$XDG_BIN_HOME:$HOME/scripts
-export BROWSER=firefox-pm
+export BROWSER='firefox --ProfileManager '
 export TERMINAL=/usr/bin/kitty
 
 # wine

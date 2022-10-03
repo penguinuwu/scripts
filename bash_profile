@@ -36,8 +36,8 @@ export BROWSER='firefox --ProfileManager '
 export TERMINAL=/usr/bin/kitty
 
 # wine
-#export WINEPREFIX="$HOME"/wine/general-wine-64
-#export WINEARCH=win64
+export WINEPREFIX="$XDG_DATA_HOME"/wineprefixes/default
+export WINEARCH=win64
 
 # ssh tunnel
 export SSH_TUNNEL_ADDRESS="52698:localhost:52698"

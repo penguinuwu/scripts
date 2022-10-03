@@ -4,14 +4,21 @@ if [[ $1 == '-h' || $1 == '--help' ]]; then
 	exit 0
 fi
 
-dh=2010
-pc=07
-args="$@"
+DH=2010
+PC=44
+ARGS="$@"
 
 if [[ $# -ge 2 ]]; then
-	dh=$1
-	pc=$2
-	args="${@:3}"
+	DH=$1
+	PC=$2
+	ARGS="${@:3}"
 fi
 
-TERM=xterm ssh dh${dh}pc${pc} ${args}
+HOST="dh${DH}pc${PC}"
+
+if [[ $(ssh-check-connection "$HOST") -ne 0 ]]; then
+	echo "$HOST is down"
+	exit 1
+fi
+
+TERM=xterm ssh "$HOST" "$ARGS"

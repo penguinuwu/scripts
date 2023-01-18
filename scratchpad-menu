@@ -6,8 +6,8 @@
 
 #windows=$(swaymsg -t get_tree | jq -r '.nodes | .[] | .nodes | .[] | select(.name=="__i3_scratch") | .floating_nodes | .[] | (.id | tostring) + "\t" + (.name | tostring)')
 # efficiency improvement
-windows=$(swaymsg -t get_tree | jq -r '.nodes | .[] | select(.name=="__i3") | .nodes | .[] | select(.name=="__i3_scratch") | .floating_nodes | .[] | (.id | tostring) + "\t" + (.name | tostring)')
+windows=$(swaymsg -t get_tree | jq -r '.nodes | .[] | select(.name=="__i3") | .nodes | .[] | select(.name=="__i3_scratch") | .floating_nodes | .[] | (.id | tostring) + "\t" + (.name | tostring)' | tac)
 
-window=$(echo "$windows" | rofi -dmenu -i -p "show" | awk '{print $1;}')
+window=$(echo "$windows" | rofi -dmenu -i -p "show" | cut -f 1)
 swaymsg "[con_id=$window] focus; floating disable"
 pkill -SIGRTMIN+3 i3blocks

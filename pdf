@@ -47,4 +47,4 @@ rename-pdf () {
 	fi
 }
 
-make-pdf && clean-aux && rename-pdf
+make-pdf && make-pdf && clean-aux && rename-pdf

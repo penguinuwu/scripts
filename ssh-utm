@@ -1,24 +1,24 @@
 #!/bin/bash
 if [[ $1 == '-h' || $1 == '--help' ]]; then
-	echo "usage: $0 dh# pc# args?"
+	echo "usage: $0 dh20## pc## args?"
 	exit 0
 fi
 
-DH=2010
-PC=44
-ARGS="$@"
+DH=10
+PC=48
+ARGS=$@
 
 if [[ $# -ge 2 ]]; then
 	DH=$1
 	PC=$2
-	ARGS="${@:3}"
+	ARGS=${@:3}
 fi
 
-HOST="dh${DH}pc${PC}"
+HOST="dh20${DH}pc${PC}"
 
 if [[ $(ssh-check-connection "$HOST") -ne 0 ]]; then
 	echo "$HOST is down"
 	exit 1
 fi
 
-TERM=xterm ssh "$HOST" "$ARGS"
+TERM=xterm ssh "$HOST" $ARGS

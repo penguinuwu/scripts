@@ -10,7 +10,7 @@ function format () {
 	# 1000 mib = 1024^2 * 1000 b
 	# 1000 gib = 1024^3 * 1000 b
 	# 1000 tib = 1024^4 * 1000 b
-	
+
 	# truncate to 3 digits
 	if [[ $1 -lt 1000 ]]; then
 		echo -n "${1}B"
@@ -49,7 +49,7 @@ read tx < /sys/class/net/$interface/statistics/tx_bytes
 time=$(date +%s)
 
 # check existance of past data
-data=$XDG_CONFIG_HOME/i3blocks/network
+data="/tmp/network-info-$(whoami)"
 [ -f $data ] || echo "$time $rx $tx" > $data && chmod u+rw $data
 
 # parse past data

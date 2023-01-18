@@ -28,14 +28,19 @@ if [[ "${info[0]}" == "D" ]]; then
 	fi
 
 elif [[ "${info[0]}" == "C" ]]; then
-	echo "+$w""W ${info[2]} ${info[1]}%"; echo
+	# capped battery to 80%
+	if [[ ${info[1]} -ge 80 ]]; then
+		echo "+$w""W ${info[1]}%"; echo
+	else
+		echo "+$w""W ${info[2]} ${info[1]}%"; echo
+	fi
 	echo "#DDC5E7"
 
 else
 	# full
 	echo "${info[1]}%"; echo
-	echo "#000000"
-	echo "#FF0000"
+# 	echo "#000000"
+# 	echo "#FF0000"
 
 fi
 

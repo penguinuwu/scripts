@@ -1,0 +1,83 @@
+#!/bin/bash
+if [[ "$1" == '-h' || "$1" == '--help' ]]; then
+	echo "Usage: $0 <count|who|write output_path|find id>"
+	echo "Example: $0"
+	echo "Example: $0 count"
+	echo "Example: $0 who"
+	echo "Example: $0 write ./output_file_path"
+	echo "Example: $0 find 'username'"
+	exit 0
+fi
+
+HOSTS=''
+for pc in {01..50}; do
+	HOSTS="${HOSTS}\ndh2010pc$pc"
+done
+for pc in {01..30}; do
+	HOSTS="${HOSTS}\ndh2020pc$pc"
+done
+for pc in {01..30}; do
+	HOSTS="${HOSTS}\ndh2026pc$pc"
+done
+
+dog () {
+	local HOST="$1"
+	local OPERATION="$2"
+	local INFO="${@:3}"
+	# check if host is up
+	# reference: https://www.golinuxcloud.com/test-ssh-connection/
+	local OUTPUT="$HOST:"
+
+	timeout --foreground --kill-after=3 5 \
+		ssh -q \
+		-o BatchMode=yes \
+		-o StrictHostKeyChecking=no \
+		-o ConnectTimeout=2 \
+		$HOST 'exit 0'
+
+	if [[ $? -eq 0 ]]; then
+		OUTPUT="$OUTPUT up"
+		if [[ "$OPERATION" == 'count' ]]; then
+			USERS=$(ssh \
+					-o BatchMode=yes \
+					-o StrictHostKeyChecking=no \
+					-o ConnectTimeout=2 \
+					$HOST 'who --users | wc --lines')
+			OUTPUT="$OUTPUT $USERS"
+		elif [[ "$OPERATION" == 'who' ]]; then
+			USERS=$(ssh \
+					-o BatchMode=yes \
+					-o StrictHostKeyChecking=no \
+					-o ConnectTimeout=2 \
+					$HOST "who --users | cut -d' ' -f1 | sort -u | paste -sd ','")
+			OUTPUT="$OUTPUT $USERS"
+		elif [[ "$OPERATION" == 'find' && "$INFO" != '' ]]; then
+			SEARCH=$(ssh \
+					-o BatchMode=yes \
+					-o StrictHostKeyChecking=no \
+					-o ConnectTimeout=2 \
+					$HOST "who --users | cut -d' ' -f1 | grep -E '^$INFO'")
+			OUTPUT="$OUTPUT $SEARCH"
+		elif [[ "$OPERATION" == 'command' && "$INFO" != '' ]]; then
+			RESULT=$(ssh \
+					-o BatchMode=yes \
+					-o StrictHostKeyChecking=no \
+					-o ConnectTimeout=2 \
+					$HOST "$INFO")
+			OUTPUT="$OUTPUT $RESULT"
+		elif [[ "$OPERATION" == 'write' && "$INFO" != '' ]]; then
+			echo "$HOST" >> "$INFO"
+		fi
+	else
+		OUTPUT="$OUTPUT down"
+	fi
+	echo "$OUTPUT"
+}
+
+for HOST in $(echo -n -e "$HOSTS"); do
+	if [[ "$1" == 'parallel' ]]; then
+		dog $HOST ${@:2} &
+	else
+		dog $HOST $@
+	fi
+done

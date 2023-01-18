@@ -1,0 +1,19 @@
+#!/bin/bash
+PROXY=8080
+SOCKET='/tmp/ssh-utm-proxy'
+DH=10
+PC=48
+
+if [[ $# -ge 2 ]]; then
+	DH=$1
+	PC=$2
+fi
+
+# https://superuser.com/a/1308648
+ssh-utm $DH $PC -v -f -g -N -D $PROXY -M -S "$SOCKET"
+
+# https://www.chromium.org/developers/design-documents/network-stack/socks-proxy/
+chromium --proxy-server="socks5://localhost:$PROXY"
+
+# https://unix.stackexchange.com/a/164656
+ssh -S "$SOCKET" -O exit ''

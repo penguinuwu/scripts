@@ -12,9 +12,11 @@
 !colourtest-16
 !osu*
 !power-thing*
+!pdf
 !scratchpad*
 !sshr
 !ssh-check-connection
 !ssh-utm
+!ssh-utm-proxy
 !startw
-!pdf
+!whatisup

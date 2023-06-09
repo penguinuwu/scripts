@@ -56,7 +56,7 @@ data="/tmp/network-info-$(whoami)"
 read -a old < $data
 echo "$time $rx $tx" > $data
 time=$(( $time - ${old[0]} ))
-[ $time -le 0 ] && echo " 0B 祝 0B" && exit 0
+[ $time -le 0 ] && echo " 0B  0B" && exit 0
 
 # bytes/s
 rx=$(( $rx - ${old[1]} ))
@@ -65,9 +65,9 @@ rx_rate=$(( $rx / $time ))
 tx_rate=$(( $tx / $time ))
 
 # print
-echo -n " "
+echo -n " "
 format $rx_rate
-echo -n " 祝 "
+echo -n "  "
 format $tx_rate
 echo
 

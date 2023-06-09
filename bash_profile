@@ -35,10 +35,6 @@ export PATH=$PATH:$XDG_BIN_HOME:$HOME/scripts
 export BROWSER='firefox --ProfileManager '
 export TERMINAL=/usr/bin/kitty
 
-# wine
-export WINEPREFIX="$XDG_DATA_HOME"/wineprefixes/default
-export WINEARCH=win64
-
 # ssh tunnel
 export SSH_TUNNEL_ADDRESS="52698:localhost:52698"
 

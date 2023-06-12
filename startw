@@ -8,10 +8,15 @@ export GDK_BACKEND=wayland
 export XDG_CURRENT_DESKTOP=sway
 export MOZ_ENABLE_WAYLAND=1
 
+# https://github.com/fairyglade/ly/issues/331
+dbus-update-activation-environment --all
+eval $(/usr/bin/gnome-keyring-daemon --start --components=pkcs11,secrets,ssh 2> /dev/null)
+export SSH_AUTH_SOCK
+
 # activate pamixer (maybe?)
 # https://unix.stackexchange.com/a/563563
 /usr/bin/pamixer --get-volume 1> /dev/null 2>& 1
-/usr/bin/sway
+/usr/bin/sway --debug 1> /tmp/sway-stdout.log 2> /tmp/sway-stderr.log
 
 echo 'killall sway-audio-idle-inhibit ...'
 killall sway-audio-idle-inhibit

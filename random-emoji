@@ -1,0 +1,15 @@
+#!/bin/bash
+# EMOJI_FILES_DIR='/usr/lib/python3.10/site-packages/picker/data/'
+EMOJI_FILE='/usr/share/rofi-emoji/all_emojis.txt'
+if [[ ! -f "$EMOJI_FILE" ]]; then
+	printf '%s\n' '💀'
+	exit 0
+fi
+
+EMOJI_COUNT=$(cat "$EMOJI_FILE" | wc --lines)
+
+RANDOM_EMOJI_INDEX=$((RANDOM % $EMOJI_COUNT))
+RANDOM_EMOJI_LINE="$(head --lines=$RANDOM_EMOJI_INDEX -- "$EMOJI_FILE" | tail --lines=1)"
+
+# https://www.baeldung.com/linux/display-first-n-characters-of-file
+printf '%s\n' "${RANDOM_EMOJI_LINE:0:1}"

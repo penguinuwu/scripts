@@ -37,12 +37,17 @@ __ps_fg_magenta='\e[0;35m'
 __ps_fg_cyan='\e[0;36m'
 __ps_command_git_branch='git branch 2> /dev/null | sed -rn "s/^\* (.*)$/ (\1) /p"'
 
+__ps_separator='💀'
+if type "random-emoji" &> /dev/null; then
+	__ps_separator="$(random-emoji)"
+fi
+
 __ps1_time="\[${__ps_bg_cyan}\] \D{%I:%M%P} "
 __ps1_directory="\[${__ps_bg_green}\] \w "
 # escaped backquotes are used so the git command re-executes every prompt
 __ps1_git="\[${__ps_bg_yellow}\]\`${__ps_command_git_branch}\`"
 __ps1_newline="\[${__ps_format_reset}\]\n"
-__ps1_session_info="[\[${__ps_fg_cyan}\]\u\[${__ps_format_reset}\]@\[${__ps_fg_magenta}\]\H\[${__ps_format_reset}\]]"
+__ps1_session_info="[\[${__ps_fg_cyan}\]\u\[${__ps_format_reset}\]${__ps_separator}\[${__ps_fg_magenta}\]\H\[${__ps_format_reset}\]]"
 __ps1_prompt="\[${__ps_fg_yellow}\]\$\[${__ps_format_reset}\] "
 
 # ps1

@@ -2,13 +2,18 @@
 lock() {
 	# https://www.reddit.com/r/unixporn/comments/pbm6qy/sway_first_time_ricing_on_linux_how_did_i_do/
 	# https://github.com/shaunsingh/nix-darwin-dotfiles/tree/e900a178f3f379cd8b6f88abbe0bf75531909fd2/.config/scripts
-	pgrep swaylock || swaylock
+	pgrep swaylock
+	if [[ $? -eq 1 ]]; then
+		swaymsg -q output DP-4 disable
+		swaylock
+	fi
 }
 
 off() {
 	# TODO: maybe start swayidle and record pid then sigusr1 it ?
 	# or wait for wayland updates lollllllll
-	#sleep 0.5 && pkill -SIGUSR1 swayidle
+	#sleep 0.3 && pkill -SIGUSR1 swayidle
+	#swaymsg "output * dpms off"
 	true
 }
 
@@ -19,7 +24,7 @@ case "$1" in
 	nvm)
 		;;
 	on)
-		swaymsg 'output * dpms on'
+		swaymsg 'output * enable'
 		;;
 	off)
 		off
@@ -31,13 +36,13 @@ case "$1" in
 		swaymsg exit
 		;;
 	suspend)
-		lock; sleep 0.5 && off && systemctl suspend
+		lock; off && systemctl suspend
 		;;
 	hybrid-sleep)
-		lock; sleep 0.5 && off && systemctl hybrid-sleep
+		lock; off && systemctl hybrid-sleep
 		;;
 	hibernate)
-		lock; sleep 0.5 && off && systemctl hibernate
+		lock; off && systemctl hibernate
 		;;
 	reboot)
 		systemctl reboot

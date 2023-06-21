@@ -25,6 +25,11 @@ function format () {
 	fi
 }
 
+# nf-cod-cloud_upload
+UPLOAD_ICON=''
+# nf-cod-cloud_download
+DOWNLOAD_ICON=''
+
 # check and pick interface
 w=$(ls /sys/class/net/ | grep wlp)
 e=$(ls /sys/class/net/ | grep enp)
@@ -56,7 +61,7 @@ data="/tmp/network-info-$(whoami)"
 read -a old < $data
 echo "$time $rx $tx" > $data
 time=$(( $time - ${old[0]} ))
-[ $time -le 0 ] && echo " 0B  0B" && exit 0
+[ $time -le 0 ] && echo "$DOWNLOAD_ICON 0B $UPLOAD_ICON 0B" && exit 0
 
 # bytes/s
 rx=$(( $rx - ${old[1]} ))
@@ -65,9 +70,9 @@ rx_rate=$(( $rx / $time ))
 tx_rate=$(( $tx / $time ))
 
 # print
-echo -n " "
+echo -n "$DOWNLOAD_ICON "
 format $rx_rate
-echo -n "  "
+echo -n " $UPLOAD_ICON "
 format $tx_rate
 echo
 

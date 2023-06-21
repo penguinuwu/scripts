@@ -11,7 +11,8 @@ esac
 # efficiency improvement
 windows=$(swaymsg -t get_tree | jq -r '.nodes | .[] | select(.name=="__i3") | .nodes | .[] | select(.name=="__i3_scratch") | .floating_nodes | .[] | .id')
 
-echo -n " "
+# nf-cod-multiple_windows
+echo -n " "
 [[ -z "$windows" ]] && echo "0" && exit 0
 
 count=$(wc -l <<< "$windows")

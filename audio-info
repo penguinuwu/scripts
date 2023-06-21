@@ -7,7 +7,9 @@ case $button in
 esac
 
 mute=$(pamixer --get-mute)
-[ "$mute" == "true" ] && echo "婢 " && exit 0
+# nf-cod-mute
+[ "$mute" == "true" ] && echo " " && exit 0
 
-echo "墳 $(pamixer --get-volume)%"
+# nf-cod-unmute
+echo " $(pamixer --get-volume)%"
 exit 0

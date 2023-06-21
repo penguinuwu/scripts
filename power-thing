@@ -4,7 +4,7 @@ lock() {
 	# https://github.com/shaunsingh/nix-darwin-dotfiles/tree/e900a178f3f379cd8b6f88abbe0bf75531909fd2/.config/scripts
 	pgrep swaylock
 	if [[ $? -eq 1 ]]; then
-		swaymsg -q output DP-4 disable
+		swaymsg -q output DP-1 disable
 		swaylock
 	fi
 }

@@ -8,5 +8,6 @@ case $button in
 	5) light -U 2 > /dev/null;;
 esac
 
-printf '盛 %.f\n' "$(light -G)"
+# nf-oct-sun
+printf ' %.f\n' "$(light -G)"
 exit 0

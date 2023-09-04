@@ -1,7 +1,7 @@
 #!/bin/bash
 
 pgrep swaylock && exit
-options="nvm\non\noff\nlock\nsuspend\nhybrid-sleep\nhibernate\nreboot\nshutdown\nexit"
+options="nvm\non\noff\nlock\nsuspend\nhybrid-sleep\nhibernate\nreboot\nshutdown/poweroff\nexit"
 option=$(echo -e $options | rofi -dmenu -i -p "power")
 $HOME/scripts/power-thing -q $option
 exit 0

@@ -1,2 +1,3 @@
 #!/bin/sh
-xdotool windowunmap $(xwininfo | grep -i "xwininfo: Window id:" | cut -f4 -d" ")
+PID_EQUALS="$(swayinfo | grep -E '^pid=(.*)$')"
+swaymsg [$PID_EQUALS] move scratchpad

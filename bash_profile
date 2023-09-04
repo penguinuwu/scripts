@@ -23,7 +23,6 @@ alias vim='nvim '
 alias lxappearance='GDK_BACKEND=x11 lxappearance '
 #alias code='code --enable-features=UseOzonePlatform --ozone-platform=wayland '
 #alias vscodium='vscodium --enable-features=UseOzonePlatform --ozone-platform=wayland '
-alias sway='startw '
 
 # gtk themes
 export GTK_RC_FILES="$XDG_CONFIG_HOME"/gtk-1.0/gtkrc

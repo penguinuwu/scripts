@@ -63,15 +63,15 @@ export GEM_SPEC_CACHE="$XDG_CACHE_HOME"/gem
 
 export _JAVA_OPTIONS=-Djava.util.prefs.userRoot="$XDG_CONFIG_HOME"/java
 export GRADLE_USER_HOME="$XDG_DATA_HOME"/gradle
-#alias mvn="mvn --global-settings $XDG_CONFIG_HOME/maven/settings.xml"
+alias mvn="mvn --global-settings $XDG_CONFIG_HOME/maven/settings.xml "
 
-alias nvidia-settings="nvidia-settings --config=$XDG_CONFIG_HOME/nvidia-settings-rc"
+alias nvidia-settings="nvidia-settings --config=$XDG_CONFIG_HOME/nvidia-settings-rc "
 export CUDA_CACHE_PATH="$XDG_CACHE_HOME"/nv
 
-alias wget="wget --hsts-file=$XDG_CACHE_HOME/wget-hsts"
+alias wget="wget --hsts-file=$XDG_CACHE_HOME/wget-hsts "
 export WGETRC="$XDG_CONFIG_HOME"/wgetrc
 
-alias yarn="yarn --use-yarnrc $XDG_CONFIG_HOME/yarn/config"
+alias yarn="yarn --use-yarnrc $XDG_CONFIG_HOME/yarn/config "
 export NPM_CONFIG_USERCONFIG="$XDG_CONFIG_HOME"/npm/npmrc
 export NODE_REPL_HISTORY="$XDG_DATA_HOME"/node_repl_history
 

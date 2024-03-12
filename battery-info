@@ -7,12 +7,23 @@ i=$(cat /sys/class/power_supply/BAT1/current_now)
 v=$(cat /sys/class/power_supply/BAT1/voltage_now)
 w=$(awk "BEGIN { printf \"%.0f\", $i * $v / 10^12 }")
 
-if [[ "${info[0]}" == "D" ]]; then
-	# echo " ${info[1]}% ${info[2]} $w"W; echo
-	echo "-$w""W ${info[2]} ${info[1]}%"; echo
+# bios battery cap
+battery_cap=80
 
-	# text orange if using 15W
-	# text red if using 20W
+if [[ "${info[0]}" == "D" ]]; then
+	# acpi bug with capped battery
+	if [[ ${info[1]} -ge $battery_cap ]]; then
+		echo "-${w}W ${info[1]}%"; echo
+		echo "#DDC5E7"
+		exit 0
+	fi
+
+	# print text
+	#echo " ${info[1]}% ${info[2]} ${w}W"; echo
+	echo "-${w}W ${info[2]} ${info[1]}%"; echo
+
+	# print colour
+	# orange if using 15W, red if using 20W
 	if [[ $w -ge 15 ]]; then
 		[[ $w -ge 20 ]] && echo "#FF0000" || echo "#9900FF"
 	else
@@ -28,19 +39,21 @@ if [[ "${info[0]}" == "D" ]]; then
 	fi
 
 elif [[ "${info[0]}" == "C" ]]; then
-	# capped battery to 80%
-	if [[ ${info[1]} -ge 80 ]]; then
-		echo "+$w""W ${info[1]}%"; echo
+	# print text
+	if [[ ${info[1]} -ge $battery_cap ]]; then
+		echo "+${w}W ${info[1]}%"; echo
 	else
-		echo "+$w""W ${info[2]} ${info[1]}%"; echo
+		echo "+${w}W ${info[2]} ${info[1]}%"; echo
 	fi
+
+	# print colour
 	echo "#DDC5E7"
 
 else
-	# full
+	# battery full
 	echo "${info[1]}%"; echo
-# 	echo "#000000"
-# 	echo "#FF0000"
+	#echo "#000000"
+	#echo "#FF0000"
 
 fi
 

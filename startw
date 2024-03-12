@@ -20,7 +20,7 @@ export SSH_AUTH_SOCK
 /usr/bin/pamixer --get-volume 1> /dev/null 2>& 1
 
 # set time for debugging log
-DATETIME="$(date '+%Y-%M-%d--%T-%::z')"
+DATETIME="$(date '+%Y-%m-%d--%T-%::z')"
 /usr/bin/sway --verbose --debug 1> /tmp/sway-stdout-${DATETIME}.log 2> /tmp/sway-stderr-${DATETIME}.log
 
 # killall processes when logged out instead

@@ -2,7 +2,7 @@
 
 # stolen from
 # https://github.com/vivien/i3blocks-contrib/blob/master/bandwidth/bandwidth
-function format () {
+function format {
 	# return if negative
 	[ $1 -lt 0 ] && echo -n "0B" && return
 
@@ -54,7 +54,7 @@ read tx < /sys/class/net/$interface/statistics/tx_bytes
 time=$(date +%s)
 
 # check existance of past data
-data="/tmp/network-info-$(whoami)"
+data="/tmp/$(whoami)-network-info.txt"
 [ -f $data ] || echo "$time $rx $tx" > $data && chmod u+rw $data
 
 # parse past data

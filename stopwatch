@@ -1,0 +1,62 @@
+#!/bin/bash
+TIME_PATH="/tmp/$(whoami)-time.txt"
+ALARM_DURATION='1m'
+ALARM_INTERVAL=300 # 5 minutes
+ALARM_SOUND="$HOME/files/music/By_the_Seaside.mp3"
+
+current_time="$(date --utc '+%s')"
+
+function stop_alarm {
+	pkill -f 'vlc --intf dummy --no-video --loop'
+}
+
+command=''
+case $button in
+	1) command='dismiss';;
+	2) stop_alarm; rm -f -- "$TIME_PATH";;
+	3) stop_alarm; echo -e "$current_time\n0" > "$TIME_PATH";;
+	4) ;;
+	5) ;;
+esac
+
+if [[ ! -f "$TIME_PATH" ]]; then
+	echo ' 00:00:00'
+	echo
+	echo '#B7DBF3'
+	exit 0
+fi
+
+initial_time="$(head -n1 "$TIME_PATH")"
+previous_multiple="$(tail -n1 "$TIME_PATH")"
+
+elapsed_time="$(( $current_time - $initial_time ))"
+current_multiple="$(( $elapsed_time / $ALARM_INTERVAL ))"
+
+# nf-oct-stopwatch
+date --utc --date=@"$elapsed_time" '+ %T'
+echo
+
+# check if alarm interval has passed
+if [[ $current_multiple -gt $previous_multiple ]]; then
+	if [[ "$command" == 'dismiss' ]]; then
+		# stop alarm and record stop time
+		echo "$current_multiple" >> "$TIME_PATH"
+		stop_alarm
+	else
+		# only beep alarm if previous alarm was cancelled
+		alarm_count="$(pgrep -c -f 'vlc --intf dummy --no-video --loop')"
+		if [[ $(( $current_multiple - $previous_multiple )) -eq 1 ]] && [[ $alarm_count -eq 0 ]]; then
+			# https://github.com/vivien/i3blocks/issues/294#issuecomment-419310380
+			swaymsg exec -q "timeout \"$ALARM_DURATION\" vlc --intf dummy --no-video --loop \"$ALARM_SOUND\""
+		fi
+
+		# flash by changing colour every second
+		if [[ $(( $elapsed_time % 2 )) -ne 0 ]]; then
+			echo -e '#000000\n#FF0000'
+			exit 0
+		fi
+	fi
+fi
+
+echo '#B7DBF3'
+exit 0

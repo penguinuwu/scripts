@@ -38,9 +38,9 @@ __ps_fg_cyan='\e[0;36m'
 __ps_command_git_branch='git branch 2> /dev/null | sed -rn "s/^\* (.*)$/ (\1) /p"'
 
 __ps_separator='💀'
-if type "random-emoji" &> /dev/null; then
-	__ps_separator="$(random-emoji)"
-fi
+#if type "random-emoji" &> /dev/null; then
+#	__ps_separator="$(random-emoji)"
+#fi
 
 __ps1_time="\[${__ps_bg_cyan}\] \D{%I:%M%P} "
 __ps1_directory="\[${__ps_bg_green}\] \w "

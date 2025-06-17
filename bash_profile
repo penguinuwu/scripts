@@ -27,7 +27,7 @@ alias lxappearance='GDK_BACKEND=x11 lxappearance '
 # gtk themes
 export GTK_RC_FILES="$XDG_CONFIG_HOME"/gtk-1.0/gtkrc
 export GTK2_RC_FILES="$XDG_CONFIG_HOME"/gtk-2.0/gtkrc
-export GTK_THEME='Graphite-pink-dark'
+export GTK_THEME='Graphite-pink-Dark'
 
 # edit defaults
 export PATH=$PATH:$XDG_BIN_HOME:$HOME/scripts
@@ -57,18 +57,24 @@ export PYLINTHOME="$XDG_CACHE_HOME"/pylint
 export IPYTHONDIR="$XDG_CONFIG_HOME"/jupyter
 export JUPYTER_CONFIG_DIR="$XDG_CONFIG_HOME"/jupyter
 
+export RBENV_ROOT="$XDG_DATA_HOME"/rbenv
+export RUBY_BUILD_CACHE_PATH="$XDG_CACHE_HOME"/rbenv/cache
 export GEM_HOME="$XDG_DATA_HOME"/gem
+#export PATH="$PATH:$(gem env user_gemhome)/bin"
 export GEM_SPEC_CACHE="$XDG_CACHE_HOME"/gem
 
-export _JAVA_OPTIONS=-Djava.util.prefs.userRoot="$XDG_CONFIG_HOME"/java
+# ~/.java ~/.sts4
+export _JAVA_OPTIONS="-Djava.util.prefs.userRoot=${XDG_CONFIG_HOME}/java -Dlanguageserver.boot.symbolCacheDir=${XDG_CACHE_HOME}/sts4/symbolCache"
+# ~/.gradle
 export GRADLE_USER_HOME="$XDG_DATA_HOME"/gradle
+# ~/.m2 doesnt always work
 alias mvn="mvn --global-settings $XDG_CONFIG_HOME/maven/settings.xml "
 
 alias nvidia-settings="nvidia-settings --config=$XDG_CONFIG_HOME/nvidia-settings-rc "
 export CUDA_CACHE_PATH="$XDG_CACHE_HOME"/nv
 
-alias wget="wget --hsts-file=$XDG_CACHE_HOME/wget-hsts "
-export WGETRC="$XDG_CONFIG_HOME"/wgetrc
+export WGETRC="$XDG_CONFIG_HOME/wgetrc"
+alias wget="wget --hsts-file='$XDG_CACHE_HOME/wget-hsts' "
 
 alias yarn="yarn --use-yarnrc $XDG_CONFIG_HOME/yarn/config "
 export NPM_CONFIG_USERCONFIG="$XDG_CONFIG_HOME"/npm/npmrc
@@ -96,3 +102,6 @@ export VIMINIT="source $VIMHOME/vimrc"
 
 # R stats
 export R_ENVIRON=${XDG_CONFIG_HOME}/Renviron
+
+# rust toolchain installer
+export RUSTUP_HOME="$XDG_DATA_HOME"/rustup

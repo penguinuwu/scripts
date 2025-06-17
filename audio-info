@@ -2,8 +2,8 @@
 
 case $button in
 	1|2|3) pamixer --toggle-mute;;
-	4) pamixer --increase 2;;
-	5) pamixer --decrease 2;;
+	4) pamixer --allow-boost --set-limit 200 --increase 2;;
+	5) pamixer --allow-boost --set-limit 200 --decrease 2;;
 esac
 
 mute=$(pamixer --get-mute)

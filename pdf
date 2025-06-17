@@ -38,7 +38,7 @@ rename-pdf () {
 	# error occurs when rename happens, so random temp name is used
 	randname="${dir}/${RANDOM}-${RANDOM}-${base}.pdf"
 	mv -vf -- "${dir}/${base}.pdf" "${randname}"
-	mv -vf -- "${randname}" "${dir}/${output}"
+	mv -vf -- "${randname}" "${output}"
 
 	# move file back on error
 	if [ "$?" != '0' ]; then

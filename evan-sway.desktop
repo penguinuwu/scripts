@@ -1,0 +1,9 @@
+# copy file here:
+# /usr/share/wayland-sessions/evan-sway.desktop
+
+[Desktop Entry]
+Name=Evan Sway
+Comment=hehehehehe
+# bash used to resolve HOME variable
+Exec=/usr/bin/bash -c "$HOME/scripts/startw"
+Type=Application
